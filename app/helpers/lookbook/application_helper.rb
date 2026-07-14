@@ -12,7 +12,7 @@ module Lookbook
         file_path = file.to_s.sub(%r{^/}, "")
 
         # Build CDN URL: asset_host already includes release path
-        # e.g., https://cdn.example.com/eureka/{release}/assets/lookbook-assets/css/lookbook.css
+        # e.g., https://cdn.example.com/myapp/{release}/assets/lookbook-assets/css/lookbook.css
         "#{asset_host}#{assets_prefix}/lookbook-assets/#{file_path}#{version ? "?v=#{Lookbook::VERSION}" : ""}"
       else
         # Development: use middleware path

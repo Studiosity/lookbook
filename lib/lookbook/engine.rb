@@ -6,6 +6,10 @@ module Lookbook
 
     config.autoload_paths << File.expand_path(root.join("app/components"))
 
+    # Note: Lookbook assets are pre-built and contain modern CSS that Sprockets/Sass cannot process.
+    # Instead of adding them to the asset pipeline, we copy them to public/ during deployment.
+    # See lib/tasks/lookbook_assets.rake for the copy task.
+
     initializer "lookbook.assets.serve" do
       config.app_middleware.use(
         Rack::Static,

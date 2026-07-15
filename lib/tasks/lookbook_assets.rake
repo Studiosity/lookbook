@@ -32,9 +32,14 @@ namespace :lookbook do
   end
 end
 
-# Hook into assets:precompile so this runs automatically during deployment
+# Hook into assets:precompile so this runs automatically during deployment, but only
+# when the host app is actually going to serve assets from a CDN (see lookbook_asset_path).
+# Otherwise the gem's own Rack::Static middleware already serves these assets directly.
 if Rake::Task.task_defined?('assets:precompile')
   Rake::Task['assets:precompile'].enhance do
-    Rake::Task['lookbook:copy_assets'].invoke
+    if Rails.application.config.action_controller.respond_to?(:asset_host) &&
+        Rails.application.config.action_controller.asset_host.present?
+      Rake::Task['lookbook:copy_assets'].invoke
+    end
   end
 end

@@ -16,13 +16,13 @@ module Lookbook
         "#{asset_host}#{assets_prefix}/lookbook-assets/#{file_path}#{version ? "?v=#{Lookbook::VERSION}" : ""}"
       else
         # Development: use middleware path
-        middleware_path(file, version)
+        lookbook_middleware_path(file, version)
       end
     end
 
     private
 
-    def middleware_path(file, version)
+    def lookbook_middleware_path(file, version)
       path = "#{Engine.host_config.relative_url_root}/lookbook-assets/#{file}".gsub("//", "/")
       version ? "#{path}?v=#{Lookbook::VERSION}" : path
     end
